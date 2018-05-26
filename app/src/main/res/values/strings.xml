@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">BestBuyDeveloper</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="backdrop_title">LOVE MUSIC</string>
+    <string name="backdrop_subtitle">This season top 20 albums</string>
+
+    <string name="action_add_favourite">Add to Favourites</string>
+    <string name="action_play_next">Play Next</string>
+
+    <string name="supporting">Greyhound divisively hello coldly wonderfully marginally far upon excluding.</string>
+    <string name="title">Title</string>
+    <string name="subhead">Subhead</string>
+    <string name="primary">Title goes here</string>
+    <string name="primary_short">Title here</string>
+    <string name="subtext">Subtitle here</string>
+    <string name="action_1">Action 1</string>
+    <string name="action_2">Action 2</string>
+    <string name="action_add">Adcionar</string>
+    <string name="text_view_desc">Descrição</string>
+
+    <!-- layout screen default login -->
+    <string name="titlelogo">BestBuyDeveloper by MAIN</string>
+    <string name="strLyLoginHintInputEmail">Email</string>
+    <string name="strLyLoginHintInputPassword">Password</string>
+    <string name="strLyLoginButtonLogin">Login</string>
+    <string name="strLyLoginTextViewAccount">Cadastre-se aqui!</string>
+
+    <string name="strLyLoginUserNameError">Entre com o nome do usuário</string>
+    <string name="strLyLoginPassWordError">Entre com a senha do usuário</string>
+    <string name="strLyLoginloginfailed">Falha no login</string>
+    <string name="strLyLoginUsername_error">Falha no nome</string>
+    <string name="strLyLoginPassword_error">Falha na senha</string>
+    <string name="strLyLoginStatusloginok">Sucesso no Login</string>
+</resources>
