@@ -20,6 +20,7 @@ public class ResearchService {
     private IResearchView view;
     ApiInterface apiService;
     public List<Carro> resut;
+    public Carro resutCarrId;
 
     public ResearchService(Context context, IResearchView view){
         this.context = context;
@@ -44,5 +45,25 @@ public class ResearchService {
             }
         });
         return resut;
+    }
+
+    public Carro buscarId() throws IOException {
+        apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<Carro> call = apiService.getPostById(view.getIdCarro());
+        call.enqueue(new Callback<Carro>() {
+            @Override
+            public void onResponse(Response<Carro> response, Retrofit retrofit) {
+                if(response !=null){
+                    resutCarrId = response.body();
+                }
+            }
+            @Override
+            public void onFailure(Throwable t) {
+                if (t != null){
+
+                }
+            }
+        });
+        return resutCarrId;
     }
 }
