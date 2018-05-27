@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 
@@ -36,7 +38,12 @@ public class ActivityUtil {
             Manifest.permission.ACCESS_WIFI_STATE
     };
 
+
     public ActivityUtil() {
+    }
+
+    public ActivityUtil(Context ctx){
+        this.context = ctx;
     }
 
     /*
@@ -131,5 +138,12 @@ public class ActivityUtil {
         } catch (Exception e) {
             e.getMessage().toString();
         }
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) this.context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }
