@@ -23,6 +23,7 @@
     <string name="action_2">Action 2</string>
     <string name="action_add">Adcionar</string>
     <string name="text_view_desc">Descrição</string>
+    <string name="spinner_qtde">Quantidade:</string>
 
     <!-- layout screen default login -->
     <string name="titlelogo">BestBuyDeveloper by MAIN</string>
@@ -104,6 +105,11 @@
 
     <string name="name_car">BMW 120i Sport</string>
     <string name="key_detalhe">detalhe</string>
+
+    <string name="marca">MARCA</string>
+    <string name="modelo">MODELO</string>
+    <string name="preco">PREÇO</string>
+    <string name="qtde">QTDE</string>
 
 
 </resources>
