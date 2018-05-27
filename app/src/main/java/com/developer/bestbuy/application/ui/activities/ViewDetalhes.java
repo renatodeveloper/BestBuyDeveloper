@@ -1,6 +1,7 @@
 package com.developer.bestbuy.application.ui.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -19,6 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.developer.bestbuy.R;
+import com.developer.bestbuy.application.service.IResearchView;
+import com.developer.bestbuy.application.service.research.ResearchPresenter;
+import com.developer.bestbuy.application.ui.adapter.CarroAdapter;
 import com.developer.bestbuy.domain.model.Carro;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -33,7 +37,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ViewDetalhes extends Activity {
+public class ViewDetalhes extends Activity implements IResearchView {
+    private ResearchPresenter presenter;
+    public Carro c;
+
     @BindView(R.id.title_text) TextView marca;
     @BindView(R.id.subtitle_text) TextView nome;
     @BindView(R.id.spinnerQtde) Spinner spinnerQtde;
@@ -66,13 +73,21 @@ public class ViewDetalhes extends Activity {
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
             Gson gson = new GsonBuilder().create();
-            Carro carro = gson.fromJson(bundle.getString(getApplicationContext().getResources().getString(R.string.key_detalhe)), Carro.class);
-            if(carro != null){
-                marca.setText(carro.getMarca());
-                nome.setText(carro.getNome());
-                descricao.setText(carro.getDescricao());
+            c = gson.fromJson(bundle.getString(getApplicationContext().getResources().getString(R.string.key_detalhe)), Carro.class);
+            /*
+            Get by idCarro
+            if(c != null){
+                presenter = new ResearchPresenter(this, this);
+                presenter.buscarId();
+            }
+            */
 
-                String[] value = populaSpinner(carro.getQuantidade());
+            if(c != null){
+                marca.setText(c.getMarca());
+                nome.setText(c.getNome());
+                descricao.setText(c.getDescricao());
+
+                String[] value = populaSpinner(c.getQuantidade());
 
                 final List<String> plantsList = new ArrayList<>(Arrays.asList(value));
                 final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
@@ -101,10 +116,8 @@ public class ViewDetalhes extends Activity {
                         return view;
                     }
                 };
-
                 spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
                 spinnerQtde.setAdapter(spinnerArrayAdapter);
-
                 spinnerQtde.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -120,7 +133,6 @@ public class ViewDetalhes extends Activity {
 
                     }
                 });
-
                 /*
                 ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<Integer>(this, R.layout.spinner_item, value);
                 ArrayAdapter<Integer> spinnerArrayAdapter = arrayAdapter;
@@ -128,23 +140,23 @@ public class ViewDetalhes extends Activity {
                 spinnerQtde.setAdapter(spinnerArrayAdapter);
                 */
 
-                Picasso.get().load(carro.getImagem()).into(imageView);
-                Picasso.get().load(carro.getImagem()).into(imageViewAvatar);
+                Picasso.get().load(c.getImagem()).into(imageView);
+                Picasso.get().load(c.getImagem()).into(imageViewAvatar);
             }
-        }
+       }
 
     }
 
      @OnClick(R.id.imageViewAdd)
     public void submit() {
         try{
-            Toast.makeText(getApplicationContext(), "Adicionado", Toast.LENGTH_LONG).show();
+            Home.carrinho.add(c);
         }catch (Exception e){
             e.getMessage().toString();
         }
     }
 
-    public String[]populaSpinner(int qtde){
+    public static String[]populaSpinner(int qtde){
         String[] spinner = null;
         try{
             if(qtde>0){
@@ -164,5 +176,29 @@ public class ViewDetalhes extends Activity {
             e.getMessage().toString();
         }
         return spinner;
+    }
+
+    @Override
+    public void showResult(List<Carro> value) {
+
+    }
+
+    @Override
+    public void showResult(Carro value) {
+        try{
+
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+    }
+
+    @Override
+    public void error(int resId) {
+        Toast.makeText(this, getString(resId), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public Integer getIdCarro() {
+        return c.getId();
     }
 }
