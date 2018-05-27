@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface IResearchView {
     void showResult(List<Carro> value);
+    void showResult(Carro value);
     void error(int resId);
+    Integer getIdCarro();
 }
