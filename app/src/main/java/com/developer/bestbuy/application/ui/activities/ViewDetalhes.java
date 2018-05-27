@@ -1,14 +1,20 @@
 package com.developer.bestbuy.application.ui.activities;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +24,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,11 +36,11 @@ import butterknife.OnClick;
 public class ViewDetalhes extends Activity {
     @BindView(R.id.title_text) TextView marca;
     @BindView(R.id.subtitle_text) TextView nome;
-    @BindView(R.id.textViewQtde) TextView qtde;
+    @BindView(R.id.spinnerQtde) Spinner spinnerQtde;
     @BindView(R.id.media_image) ImageView imageView;
     @BindView(R.id.avatar_image) ImageView imageViewAvatar;
     @BindView(R.id.textViewDescricao) TextView descricao;
-    @BindView(R.id.buttonAdicionar) Button adicionar;
+    @BindView(R.id.imageViewAdd) ImageView adicionar;
     @BindColor(R.color.color_red) int red;
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -61,8 +71,62 @@ public class ViewDetalhes extends Activity {
                 marca.setText(carro.getMarca());
                 nome.setText(carro.getNome());
                 descricao.setText(carro.getDescricao());
-                qtde.setText("UNIDADES: " + String.valueOf(carro.getQuantidade()));
-                qtde.setTextColor(red);
+
+                String[] value = populaSpinner(carro.getQuantidade());
+
+                final List<String> plantsList = new ArrayList<>(Arrays.asList(value));
+                final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
+                        this,R.layout.spinner_item,plantsList){
+                    @Override
+                    public boolean isEnabled(int position){
+                        if(position == 0) {
+                            // Disable the first item from Spinner
+                            // First item will be use for hint
+                            return false;
+                        }
+                        else{
+                            return true;
+                        }
+                    }
+                    @Override
+                    public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                        View view = super.getDropDownView(position, convertView, parent);
+                        TextView tv = (TextView) view;
+                        if(position == 0){
+                            tv.setTextColor(Color.GRAY);
+                        }
+                        else {
+                            tv.setTextColor(Color.BLACK);
+                        }
+                        return view;
+                    }
+                };
+
+                spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
+                spinnerQtde.setAdapter(spinnerArrayAdapter);
+
+                spinnerQtde.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        String selectedItemText = (String) parent.getItemAtPosition(position);
+                        if(position > 0){
+                            Toast.makeText
+                                    (getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+                /*
+                ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<Integer>(this, R.layout.spinner_item, value);
+                ArrayAdapter<Integer> spinnerArrayAdapter = arrayAdapter;
+                spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerQtde.setAdapter(spinnerArrayAdapter);
+                */
 
                 Picasso.get().load(carro.getImagem()).into(imageView);
                 Picasso.get().load(carro.getImagem()).into(imageViewAvatar);
@@ -71,12 +135,34 @@ public class ViewDetalhes extends Activity {
 
     }
 
-    @OnClick(R.id.buttonAdicionar)
+     @OnClick(R.id.imageViewAdd)
     public void submit() {
         try{
             Toast.makeText(getApplicationContext(), "Adicionado", Toast.LENGTH_LONG).show();
         }catch (Exception e){
             e.getMessage().toString();
         }
+    }
+
+    public String[]populaSpinner(int qtde){
+        String[] spinner = null;
+        try{
+            if(qtde>0){
+                int cont = qtde+1;
+                spinner = new String[cont];
+                for(int s=0; s<qtde; s++){
+                    if(s==0){
+                        spinner[s]= "Selecione a qtde ...";
+                    }else {
+                        int idx = Integer.valueOf(s);
+                        String lbl = String.valueOf(idx);
+                        spinner[s] = lbl;
+                    }
+                }
+            }
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return spinner;
     }
 }
