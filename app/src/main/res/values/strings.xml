@@ -37,4 +37,61 @@
     <string name="strLyLoginUsername_error">Falha no nome</string>
     <string name="strLyLoginPassword_error">Falha na senha</string>
     <string name="strLyLoginStatusloginok">Sucesso no Login</string>
+
+
+
+    <!-- parametros DAO -->
+    <string name="folder">"/CARRO_DESENV/"</string>
+    <string name="folderError">Folder CARRO_DESENV indisponível</string>
+
+
+    <!-- tabelas -->
+    <string name="dsNameTblUser">Usuario</string>
+    <string name="sqlAlterTblUsuario">ALTER TABLE Usuarios ADD COLUMN XYZ TEXT</string>
+    <string name="dsNomeTblUser">dsNome</string>
+    <string name="dsLoginTblUser">dsLogin</string>
+    <string name="dsSenhaTblUser">dsSenha</string>
+    <string name="idTblUser">idUsuario</string>
+    <string name="namePhoto">namePhoto</string>
+    <string name="bytePhoto">bytePhoto</string>
+
+    <string name="sqlCreateTableUsuario">
+        CREATE TABLE Usuario (idUsuario INTEGER PRIMARY KEY AUTOINCREMENT, dsNome TEXT, dsLogin TEXT, dsSenha TEXT, namePhoto TEXT, bytePhoto Blob);
+    </string>
+
+    <string name="sqlCreateTableCarro">
+        CREATE TABLE Carro (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, descricao TEXT, marca TEXT, quantidade INTEGER, preco FLOAT, imagem TEXT);
+    </string>
+
+    <string name="sqlCreateTablePedio">
+        CREATE TABLE Pedido (idPedido INTEGER PRIMARY KEY AUTOINCREMENT, dataHora INTEGER, dsDataHora TEXT, total DOUBLE, idUsuario INTEGER, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario));
+    </string>
+
+    <string name="sqlCreateTableItemPedido">
+        CREATE TABLE ItemPedido (idPedido INTEGER, idCarro INTEGER, precoUnitario DOUBLE, quantidade INTEGER, precoTotal DOUBLE, PRIMARY KEY (idPedido, idCarro));
+    </string>
+
+
+    <!-- alertas -->
+
+    <string name="errorDbCreateMemoriaInterna">NÃO FOI POSSÍVEL CRIAR O BANCO NA MEMÓRIA INTERNA. Error em: MySQLiteOpenHelper</string>
+    <string name="errorDbWriteMemoriaInterna">NÃO FOI POSSÍVEL ESCREVER O BANCO NA MEMÓRIA INTERNA. Error em: getWritableDatabase</string>
+    <string name="sucessDbInterno">Banco interno criado com sucesso!</string>
+
+    <string name="errorCreateFolderExterna">Error ao criar o FOLDER</string>
+    <string name="errorDbCreateMemoriaExterna">NÃO FOI POSSÍVEL CRIAR O BANCO NO SDCARD. Error em: MySQLiteOpenHelper</string>
+    <string name="errorDbWriteMemoriaExterna">NÃO FOI POSSÍVEL ESCREVER O BANCO NO SDCARD. Error em: getWritableDatabase</string>
+    <string name="sucessDbExterno">Banco externo criado com sucesso!</string>
+
+
+    <!-- mensagens -->
+    <string name="str_SimpleDateFormat">MMM dd,yyyy HH:mm</string>
+    <string name="str_atencao">Atenção</string>
+    <string name="str_infoPermissao">É necessária para o funcionamento do sistema!  Favor ir em configurações, selecionar o app e adicionar as permissões negada!</string>
+    <string name="str_finalizar">Finalizar</string>
+    <string name="str_infoPermissaoNeverAgain">Você só poderá usar o sistema habilitando a permissão em configurações, selecionar o app e adicionar as permissão negada!</string>
+
+
+
+
 </resources>
