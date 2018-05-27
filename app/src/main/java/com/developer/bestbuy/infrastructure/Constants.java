@@ -7,7 +7,7 @@ public class Constants {
         public static final String TIMESTAMP = "timestamp";
         public static final String VERSION_NAME = "versionName";
 
-        public static final String URL = "http://desafiobrq.herokuapp.com/v1";
+        public static final String URL = "http://desafiobrq.herokuapp.com/";
 
     }
 }
