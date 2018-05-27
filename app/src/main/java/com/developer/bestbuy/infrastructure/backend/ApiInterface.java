@@ -11,6 +11,6 @@ import retrofit.http.Query;
 
 public interface ApiInterface {
     @Headers({"Content-Type: application/json;charset=UTF-8"})
-    @GET("/carro")
+    @GET("v1/carro")
     Call<List<Carro>> getAllCars();
 }
