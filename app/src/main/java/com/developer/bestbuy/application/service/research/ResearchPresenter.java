@@ -61,4 +61,51 @@ public class ResearchPresenter {
             e.getMessage().toString();
         }
     }
+
+    public void buscarId() {
+        int idCarro = view.getIdCarro();
+        if (idCarro<=0) {
+            view.error(R.string.str_id_carro_error);
+            return;
+        }
+
+        try{
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Message msg = new Message();
+                    msg.arg1 = 0;
+                    msg.obj = null;
+                    Carro resultCarId = null;
+                    do{
+                        try{
+                            resultCarId = service.buscarId();
+                            if(resultCarId != null){
+                                msg.arg1 = 1;
+                                msg.obj = resultCarId;
+                            }
+                        }catch (Exception e){ e.getMessage().toString(); }
+                    }while (resultCarId == null);
+                    handler.sendMessage(msg);
+                }
+                Handler handler = new Handler(){
+                    @Override
+                    public void handleMessage(Message msg) {
+                        super.handleMessage(msg);
+                        if(msg.arg1 == 0){
+                            view.error(R.string.research_error_busca);
+                        }else{
+                            Carro result = (Carro) msg.obj;
+
+                            if(result != null){
+                                view.showResult(result);
+                            }
+                        }
+                    }
+                };
+            }).start();
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+    }
 }
