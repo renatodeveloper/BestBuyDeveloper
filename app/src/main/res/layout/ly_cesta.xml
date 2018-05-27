@@ -6,152 +6,95 @@
     android:layout_height="match_parent"
     tools:context=".application.ui.activities.Home">
 
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <FrameLayout
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_view"
             android:layout_width="match_parent"
-            android:layout_height="257dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:background="@android:drawable/picture_frame"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/card_margin"
+            android:elevation="3dp"
+            card_view:cardCornerRadius="@dimen/card_album_radius">
 
-            <android.support.constraint.ConstraintLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="257dp">
+                android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="150dp"
-                    android:layout_height="104dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@android:drawable/picture_frame"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/car1" />
+                    android:id="@+id/car_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/album_cover_height"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/car1"/>
 
                 <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/marca"
+                    android:text="@string/marca"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/name_car"
-                    android:textColor="@android:color/background_dark"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.53"
-                    app:layout_constraintStart_toEndOf="@+id/imageView"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Button
-                    android:id="@+id/button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/button_shape"
-                    android:text="mais detalhes"
-                    android:textColor="@android:color/background_light"
-                    android:textSize="8sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.552"
-                    app:layout_constraintStart_toEndOf="@+id/imageView"
-                    app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                    android:layout_below="@id/car_photo"
+                    android:paddingLeft="@dimen/album_title_padding"
+                    android:paddingRight="@dimen/album_title_padding"
+                    android:paddingTop="@dimen/album_title_padding"
+                    android:textColor="@color/album_title"
+                    android:textSize="@dimen/album_title" />
 
                 <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="85dp"
+                    android:id="@+id/modelo"
+                    android:text="@string/modelo"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="R$ 30.000"
-                    android:textColor="@android:color/background_dark"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.556"
-                    app:layout_constraintStart_toEndOf="@+id/imageView"
-                    app:layout_constraintTop_toBottomOf="@+id/button" />
+                    android:layout_below="@id/marca"
+                    android:paddingBottom="@dimen/songs_count_padding_bottom"
+                    android:paddingLeft="@dimen/album_title_padding"
+                    android:paddingRight="@dimen/album_title_padding"
+                    android:textSize="@dimen/songs_count" />
 
                 <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/preco"
+                    android:text="@string/preco"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="12dp"
-                    android:text="QUANTIDADE :"
-                    android:textColor="@android:color/background_dark"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                    android:layout_below="@id/modelo"
+                    android:paddingBottom="@dimen/songs_count_padding_bottom"
+                    android:paddingLeft="@dimen/album_title_padding"
+                    android:paddingRight="@dimen/album_title_padding"
+                    android:textSize="@dimen/songs_count" />
 
                 <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/quantidade"
+                    android:text="@string/qtde"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="116dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="12dp"
-                    android:text="2"
-                    android:textColor="@android:color/background_dark"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/textView3"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                    android:layout_below="@id/preco"
+                    android:paddingBottom="@dimen/songs_count_padding_bottom"
+                    android:paddingLeft="@dimen/album_title_padding"
+                    android:paddingRight="@dimen/album_title_padding"
+                    android:textSize="@dimen/songs_count" />
 
-                <Button
-                    android:id="@+id/button2"
+                <ImageView
+                    android:id="@+id/overflow"
                     android:layout_width="wrap_content"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/button_shape"
-                    android:text="REMOVER"
-                    android:textColor="@android:color/background_light"
-                    android:textSize="8sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.679"
-                    app:layout_constraintStart_toEndOf="@+id/textView4"
-                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+                    android:layout_height="42dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/car_photo"
+                    android:layout_marginTop="-2dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_dots" />
 
-                <Button
-                    android:id="@+id/button3"
-                    android:layout_width="152dp"
-                    android:layout_height="30dp"
-                    android:layout_marginBottom="32dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="32dp"
-                    android:background="@drawable/button_shape"
-                    android:text="FINALIZAR COMPRA"
-                    android:textColor="@android:color/background_light"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.497"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/button2" />
+            </RelativeLayout>
 
-            </android.support.constraint.ConstraintLayout>
-        </FrameLayout>
-
+        </android.support.v7.widget.CardView>
     </android.support.constraint.ConstraintLayout>
-
+    </LinearLayout>
 </ScrollView>
