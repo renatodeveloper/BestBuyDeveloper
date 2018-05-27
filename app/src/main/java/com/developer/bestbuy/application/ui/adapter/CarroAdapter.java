@@ -37,14 +37,14 @@ public class CarroAdapter extends RecyclerView.Adapter<CarroAdapter.MyViewHolder
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, count, countt;
-        public ImageView thumbnail, overflow;
+        public ImageView photoCar, overflow;
 
         public MyViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.title);
-            count = (TextView) view.findViewById(R.id.count);
-            countt = (TextView) view.findViewById(R.id.countt);
-            thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
+            title = (TextView) view.findViewById(R.id.marca);
+            count = (TextView) view.findViewById(R.id.modelo);
+            countt = (TextView) view.findViewById(R.id.preco);
+            photoCar = (ImageView) view.findViewById(R.id.car_photo);
             overflow = (ImageView) view.findViewById(R.id.overflow);
         }
     }
@@ -71,7 +71,7 @@ public class CarroAdapter extends RecyclerView.Adapter<CarroAdapter.MyViewHolder
         holder.countt.setTextColor(Color.RED);
 
 
-        Picasso.get().load(carro.getImagem()).into(holder.thumbnail);
+        Picasso.get().load(carro.getImagem()).into(holder.photoCar);
         holder.overflow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
