@@ -17,7 +17,11 @@ import com.developer.bestbuy.R;
 import com.developer.bestbuy.application.service.ILoginView;
 import com.developer.bestbuy.application.service.login.LoginPresenter;
 import com.developer.bestbuy.infrastructure.helper.ActivityUtil;
+import com.developer.bestbuy.infrastructure.helper.DialogHelper;
 
+import butterknife.BindColor;
+import butterknife.BindDimen;
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -27,14 +31,17 @@ import static android.widget.Toast.LENGTH_SHORT;
 public class ViewLogin extends Activity implements ILoginView {
 
     private LoginPresenter loginPresenter;
-    public ActivityUtil activityUtil;
-
+    private ActivityUtil util;
+    private DialogHelper helper;
 
     @BindView(R.id.textViewVS) TextView dsVersao;
     @BindView(R.id.input_email) EditText usernameView;
     @BindView(R.id.input_password) EditText passwordView;
     @BindView(R.id.submit) AppCompatButton onLoginClick;
     @BindView(R.id.progressBar) ProgressBar myProgressBar;
+    @BindColor(R.color.color_red) int red;
+    //@BindString(R.string.title) String title;
+    //@BindDimen(R.dimen.spacer) Float spacer;
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -59,9 +66,13 @@ public class ViewLogin extends Activity implements ILoginView {
         ButterKnife.bind(this);
 
         try{
+            util = new ActivityUtil(ViewLogin.this);
+            helper = new DialogHelper(ViewLogin.this);
+
+
             PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
             dsVersao.setText(pInfo.versionName + pInfo.versionCode);
-            dsVersao.setTextColor(Color.RED);
+            dsVersao.setTextColor(red);
 
             loginPresenter = new LoginPresenter(this, this);
 
@@ -73,7 +84,15 @@ public class ViewLogin extends Activity implements ILoginView {
 
     @OnClick(R.id.submit)
     public void submit() {
-        loginPresenter.onLoginClicked();
+        try{
+            if(!util.isOnline()){
+                helper.noConection(ViewLogin.this);
+            }else{
+                loginPresenter.onLoginClicked();
+            }
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
     }
 
     @Override
