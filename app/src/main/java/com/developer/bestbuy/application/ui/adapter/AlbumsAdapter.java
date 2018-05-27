@@ -29,13 +29,13 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, count;
-        public ImageView thumbnail, overflow;
+        public ImageView photoCar, overflow;
 
         public MyViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.title);
-            count = (TextView) view.findViewById(R.id.count);
-            thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
+            title = (TextView) view.findViewById(R.id.marca);
+            count = (TextView) view.findViewById(R.id.modelo);
+            photoCar = (ImageView) view.findViewById(R.id.car_photo);
             overflow = (ImageView) view.findViewById(R.id.overflow);
         }
     }
@@ -61,7 +61,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
         holder.count.setText(carro.getQuantidade() + " songs");
 
         // loading car cover using Glide library
-        Glide.with(mContext).load(carro.getQuantidade()).into(holder.thumbnail);
+        Glide.with(mContext).load(carro.getQuantidade()).into(holder.photoCar);
 
         holder.overflow.setOnClickListener(new View.OnClickListener() {
             @Override
