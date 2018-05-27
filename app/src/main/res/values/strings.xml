@@ -92,7 +92,18 @@
     <string name="str_infoPermissaoNeverAgain">Você só poderá usar o sistema habilitando a permissão em configurações, selecionar o app e adicionar as permissão negada!</string>
 
 
+    <!-- conexão -->
+    <string name="title_msg_conection">Atenção</string>
+    <string name="desc_msg_conection">Conecte-se à Internet!</string>
+    <string name="opt_msg_conection">OK</string>
+
+    <!-- strings consome endPoint -->
+    <string name="research_error_parameter">Parâmetro inválido! </string>
+    <string name="research_error_busca">Não foi possível efetuar a busca! </string>
+
 
     <string name="name_car">BMW 120i Sport</string>
+    <string name="key_detalhe">detalhe</string>
+
 
 </resources>
