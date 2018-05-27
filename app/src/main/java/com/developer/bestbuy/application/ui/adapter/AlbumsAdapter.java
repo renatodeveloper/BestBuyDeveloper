@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.developer.bestbuy.R;
+import com.developer.bestbuy.application.ui.activities.Home;
 import com.developer.bestbuy.application.ui.activities.ViewCesta;
 import com.developer.bestbuy.application.ui.activities.ViewDetalhes;
 import com.developer.bestbuy.domain.model.Carro;
@@ -93,11 +94,11 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()) {
-                case R.id.action_add_favourite:
-                    Toast.makeText(mContext, "Add to favourite", Toast.LENGTH_SHORT).show();
+                case R.id.action_add_detalhes:
+                    mContext.startActivity(new Intent(mContext, ViewDetalhes.class));
                     return true;
-                case R.id.action_play_next:
-                    Toast.makeText(mContext, "Play next", Toast.LENGTH_SHORT).show();
+                case R.id.action_add_comprar:
+                    mContext.startActivity(new Intent(mContext, ViewCesta.class));
                     return true;
                 default:
             }
