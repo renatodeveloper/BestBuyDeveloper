@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BestBuyDeveloper</string>
+    <string name="app_name">Best Buy</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -7,11 +7,11 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="backdrop_title">LOVE MUSIC</string>
-    <string name="backdrop_subtitle">This season top 20 albums</string>
+    <string name="backdrop_title">BEST BUY</string>
+    <string name="backdrop_subtitle">Ache e Compre aqui!</string>
 
-    <string name="action_add_favourite">Add to Favourites</string>
-    <string name="action_play_next">Play Next</string>
+    <string name="action_add_detalhes">Detalhes</string>
+    <string name="action_add_comprar">Comprar</string>
 
     <string name="supporting">Greyhound divisively hello coldly wonderfully marginally far upon excluding.</string>
     <string name="title">Title</string>
@@ -93,5 +93,6 @@
 
 
 
+    <string name="name_car">BMW 120i Sport</string>
 
 </resources>
