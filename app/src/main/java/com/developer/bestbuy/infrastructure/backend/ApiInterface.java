@@ -7,10 +7,14 @@ import java.util.List;
 import retrofit.Call;
 import retrofit.http.GET;
 import retrofit.http.Headers;
+import retrofit.http.Path;
 import retrofit.http.Query;
 
 public interface ApiInterface {
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @GET("v1/carro")
     Call<List<Carro>> getAllCars();
+
+    @GET("v1/carro/{id}")
+    Call<Carro> getCarById(@Path("id") int id);
 }
