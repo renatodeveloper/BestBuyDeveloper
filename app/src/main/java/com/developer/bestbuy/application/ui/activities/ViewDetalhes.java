@@ -116,8 +116,12 @@ public class ViewDetalhes extends Activity implements IResearchView {
                         return view;
                     }
                 };
+
+
                 spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
                 spinnerQtde.setAdapter(spinnerArrayAdapter);
+
+
                 spinnerQtde.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
