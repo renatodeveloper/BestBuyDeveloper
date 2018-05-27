@@ -22,21 +22,32 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.developer.bestbuy.application.service.IResearchView;
+import com.developer.bestbuy.application.service.research.ResearchPresenter;
 import com.developer.bestbuy.application.ui.adapter.AlbumsAdapter;
 import com.developer.bestbuy.R;
+import com.developer.bestbuy.application.ui.adapter.CarroAdapter;
 import com.developer.bestbuy.domain.model.Carro;
+import com.developer.bestbuy.infrastructure.helper.ActivityUtil;
+import com.developer.bestbuy.infrastructure.helper.DialogHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Home extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, IResearchView {
 
     private RecyclerView recyclerView;
-    private AlbumsAdapter adapter;
+    private CarroAdapter adapter;
     private List<Carro> albumList;
+
+    private ActivityUtil util;
+    private DialogHelper helper;
+
+    private ResearchPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +81,7 @@ public class Home extends AppCompatActivity
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         albumList = new ArrayList<>();
-        adapter = new AlbumsAdapter(this, albumList);
+        adapter = new CarroAdapter(this, albumList);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -81,11 +92,21 @@ public class Home extends AppCompatActivity
         prepareAlbums();
 
         try {
+            util = new ActivityUtil(Home.this);
+            helper = new DialogHelper(Home.this);
+
             Glide.with(this).load(R.drawable.car_home).into((ImageView) findViewById(R.id.backdrop));
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        if(!util.isOnline()){
+            helper.noConection(Home.this);
+        }else{
+            presenter = new ResearchPresenter(this, this);
+            presenter.buscar();
+
+        }
     }
 
     //inicio
@@ -282,5 +303,24 @@ public class Home extends AppCompatActivity
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void showResult(List<Carro> value) {
+        try{
+            adapter = new CarroAdapter(this, value);
+            recyclerView.setAdapter(adapter);
+            for(Carro c : value){
+                if(c!=null){
+                }
+            }
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+    }
+
+    @Override
+    public void error(int resId) {
+        Toast.makeText(this, getString(resId), Toast.LENGTH_LONG).show();
     }
 }
