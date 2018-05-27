@@ -76,10 +76,11 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dimen24dp"
             android:layout_marginTop="@dimen/dimen40dp"
+            android:background="@drawable/button_customizado"
             android:padding="@dimen/dimen12dp"
             android:text="@string/strLyLoginButtonLogin"
-            android:background="@drawable/button_customizado"
-            />
+            android:textColor="@android:color/background_light"
+            android:textStyle="bold" />
 
         <TextView android:id="@+id/newcount"
             android:layout_width="fill_parent"
