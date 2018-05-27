@@ -49,7 +49,7 @@ public class ResearchService {
 
     public Carro buscarId() throws IOException {
         apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<Carro> call = apiService.getPostById(view.getIdCarro());
+        Call<Carro> call = apiService.getCarById(view.getIdCarro());
         call.enqueue(new Callback<Carro>() {
             @Override
             public void onResponse(Response<Carro> response, Retrofit retrofit) {
