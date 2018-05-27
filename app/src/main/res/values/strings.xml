@@ -40,6 +40,7 @@
     <string name="strLyLoginStatusloginok">Sucesso no Login</string>
 
 
+    <string name="str_id_carro_error">Não foi possível recuperar o ID do Carro!</string>
 
     <!-- parametros DAO -->
     <string name="folder">"/CARRO_DESENV/"</string>
