@@ -55,18 +55,20 @@ public class ViewDetalhes extends Activity implements IResearchView, IPedidoView
 
     @BindView(R.id.title_text) TextView marca;
     @BindView(R.id.subtitle_text) TextView nome;
-    @BindView(R.id.spinnerQtde) Spinner spinnerQtde;
+    //@BindView(R.id.spinnerQtde) Spinner spinnerQtde;
     @BindView(R.id.media_image) ImageView imageView;
     @BindView(R.id.avatar_image) ImageView imageViewAvatar;
     @BindView(R.id.textViewDescricao) TextView descricao;
     @BindView(R.id.imageViewAdd) ImageView adicionar;
     @BindColor(R.color.color_red) int red;
 
-    List<String> plantsList = null;
-    ArrayAdapter<String> spinnerArrayAdapter = null;
-    String[] value = null;
+    private List<String> qtde = new ArrayList<String>();
 
-    public static int qtdeBuy = 2;
+    ArrayAdapter<String> spinnerArrayAdapter = null;
+
+    private Spinner spinnerQTDE;
+
+    public static int qtdeBuy = 0;
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -88,7 +90,6 @@ public class ViewDetalhes extends Activity implements IResearchView, IPedidoView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ly_detalhes);
         ButterKnife.bind(this);
-
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
             Gson gson = new GsonBuilder().create();
@@ -96,6 +97,7 @@ public class ViewDetalhes extends Activity implements IResearchView, IPedidoView
 
             presenter = new ResearchPresenter(this, this);
             presenterItens = new ItensPedidoPresenter(this, this, this);
+
             /*
             Get by idCarro
             if(c != null){
@@ -108,61 +110,6 @@ public class ViewDetalhes extends Activity implements IResearchView, IPedidoView
                     marca.setText(c.getMarca());
                     nome.setText(c.getNome());
                     descricao.setText(c.getDescricao());
-
-                    value = populaSpinner(c.getQuantidade());
-                    plantsList = new ArrayList<>(Arrays.asList(value));
-
-                    /*
-
-                    spinnerArrayAdapter = new ArrayAdapter<String>(
-                            this,R.layout.spinner_item,plantsList){
-                        @Override
-                        public boolean isEnabled(int position){
-                            if(position == 0) {
-                                // Disable the first item from Spinner
-                                // First item will be use for hint
-                                return false;
-                            }
-                            else{
-                                return true;
-                            }
-                        }
-                        @Override
-                        public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                            View view = super.getDropDownView(position, convertView, parent);
-                            TextView tv = (TextView) view;
-                            if(position == 0){
-                                tv.setTextColor(Color.GRAY);
-                            }
-                            else {
-                                tv.setTextColor(Color.BLACK);
-                            }
-                            return view;
-                        }
-
-                    };
-                    spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
-                    spinnerQtde.setAdapter(spinnerArrayAdapter);
-
-
-                    spinnerQtde.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            String selectedItemText = (String) parent.getItemAtPosition(position);
-                            if(position > 0){
-                               // qtdeBuy =0;
-                               // qtdeBuy = position;
-                                //Toast.makeText(getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-
-                        }
-                    });
-
-                     */
-
                     Picasso.get().load(c.getImagem()).into(imageView);
                     Picasso.get().load(c.getImagem()).into(imageViewAvatar);
                 }catch (Exception e){
@@ -170,34 +117,52 @@ public class ViewDetalhes extends Activity implements IResearchView, IPedidoView
                 }
             }
        }
+        //***********************************************SPINNER*****************************************************
+        spinnerQTDE = (Spinner) findViewById(R.id.spinner);
 
+        qtde = populaSpinner(c.getQuantidade());
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, qtde);
+        ArrayAdapter<String> spinnerArrayAdapter = arrayAdapter;
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        spinnerQTDE.setAdapter(spinnerArrayAdapter);
+        spinnerQTDE.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View v, int posicao, long id) {
+                if(posicao > 0){
+                    String nome = parent.getItemAtPosition(posicao).toString();
+                     qtdeBuy =0;
+                     qtdeBuy = posicao;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        //**********************************************SPINNER****************************************************
     }
 
      @OnClick(R.id.imageViewAdd)
     public void submit() {
         try{
-            presenterItens.registerNewItem();
-            /*
             if(qtdeBuy>0){
-                ItensPedido item = new ItensPedido();
-                item.setIdCarro(c.getId());
-                item.setPrecoUnitario(c.getPreco());
-                item.setPrecoTotal(c.getPreco() * qtdeBuy);
-                item.carro = c;
-                item.setQuantidade(qtdeBuy);
-                Home.carrinho.adiciona(item);
-                startActivity(new Intent(this, Home.class));
+                presenterItens.registerNewItem();
+                qtdeBuy = 0;
             }else{
                 Toast.makeText(getApplicationContext(), "Selecione uma QTDE ..." , Toast.LENGTH_SHORT).show();
             }
-             */
         }catch (Exception e){
             e.getMessage().toString();
         }
     }
 
-    public static String[]populaSpinner(int qtde){
+    public static List<String>  populaSpinner(int qtde){
         String[] spinner = null;
+        List<String> retorno = new ArrayList<String>();
         try{
             if(qtde>0){
                 int cont = qtde+1;
@@ -205,17 +170,19 @@ public class ViewDetalhes extends Activity implements IResearchView, IPedidoView
                 for(int s=0; s<qtde; s++){
                     if(s==0){
                         spinner[s]= "Selecione a qtde ...";
+                        retorno.add(spinner[s]= "Selecione a qtde ...");
                     }else {
                         int idx = Integer.valueOf(s);
                         String lbl = String.valueOf(idx);
                         spinner[s] = lbl;
+                        retorno.add(spinner[s]= lbl);
                     }
                 }
             }
         }catch (Exception e){
             e.getMessage().toString();
         }
-        return spinner;
+        return retorno;
     }
 
     @Override
@@ -324,4 +291,6 @@ public class ViewDetalhes extends Activity implements IResearchView, IPedidoView
     public void resultOkPedido() {
 
     }
+
+
 }
