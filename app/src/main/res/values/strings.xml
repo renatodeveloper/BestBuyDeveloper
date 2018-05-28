@@ -12,6 +12,8 @@
 
     <string name="action_add_detalhes">Detalhes</string>
     <string name="action_add_comprar">Comprar</string>
+    <string name="action_add_remover">Remover</string>
+    <string name="action_finalizar">Finalizar Compra</string>
 
     <string name="supporting">Greyhound divisively hello coldly wonderfully marginally far upon excluding.</string>
     <string name="title">Title</string>
@@ -131,6 +133,7 @@
     <string name="keyGsonCarro">keyGsonCarro</string>
 
     <!-- tabela ItemPedido-->
+    <string name="tblNameItensPedido">ItemPedido</string>
     <string name="idPedidoItemPedido">idPedido</string>
     <string name="idCarroItemPedido">idCarro</string>
     <string name="precoUnitarioItemPedido">precoUnitario</string>
@@ -146,6 +149,7 @@
     <string name="idUsuarioPedido">idUsuario</string>
 
     <!-- tabela Carro-->
+    <string name="tblNameCarro">Carro</string>
     <string name="idCarro">id</string>
     <string name="nomeCarro">nome</string>
     <string name="dsCarro">descricao</string>
