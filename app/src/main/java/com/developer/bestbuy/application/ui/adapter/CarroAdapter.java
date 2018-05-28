@@ -128,7 +128,9 @@ public class CarroAdapter extends RecyclerView.Adapter<CarroAdapter.MyViewHolder
                     mContext.startActivity(new Intent(mContext, ViewDetalhes.class).putExtras(b));
                     return true;
                 case R.id.action_add_comprar:
-                    mContext.startActivity(new Intent(mContext, ViewCesta.class));
+                    Bundle bb = new Bundle();
+                    bb.putString(mContext.getResources().getString(R.string.key_detalhe), str);
+                    mContext.startActivity(new Intent(mContext, ViewCesta.class).putExtras(bb));
                     return true;
                 default:
             }
