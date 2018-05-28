@@ -258,6 +258,9 @@ public class ActivityUtil {
         }
         return false;
     }
+    /*
+
+
     public void limpaPref_if_Usuario(Context context) {
         try{
             SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.filePrefJsonUser), context.MODE_PRIVATE);
@@ -270,7 +273,7 @@ public class ActivityUtil {
             e.getMessage().toString();
         }
     }
-
+ */
     //********************************************** Flag existe TBL Pedido, essa tem que limpar após logout
     public void definePref_if_Pedido(Context context) {
         try{
@@ -473,7 +476,7 @@ public class ActivityUtil {
         return false;
     }
 
-    public boolean removeItem(Context context, String str){
+    public void removeItem(Context context, String str){
         Cursor cursor;
         boolean result;
         try{
@@ -486,7 +489,10 @@ public class ActivityUtil {
                 daoModelPresenter = new DaoModelPresenter(context);
                 db = daoModelPresenter.getExternalDB();
                 if (db != null) {
-                    result = db.delete(this.context.getString(R.string.tblNameItensPedido), "idPedido" + "=" + ViewLogin.idPedidoSimulado, null) > 0;
+                    result = db.delete(context.getString(R.string.tblNameItensPedido), "idPedido" + "=" + ViewLogin.idPedidoSimulado + " and idCarro"+ "=" + c.getId() , null) > 0;
+                    if(result){
+                        context.startActivity(new Intent(context, ViewCesta.class));
+                    }
                 }
             }catch (Exception e){
                 e.getMessage().toString();
@@ -495,7 +501,6 @@ public class ActivityUtil {
         }catch (Exception e){
             e.getMessage().toString();
         }
-        return false;
     }
 
     public String getInfCesta(Context context){
