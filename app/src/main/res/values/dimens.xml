@@ -33,4 +33,17 @@
     <dimen name="dimen10dip">10dp</dimen>
     <dimen name="dimen15dip">15dp</dimen>
     <dimen name="dimen35dip">35dp</dimen>
+
+
+    <dimen name="tamanho_large_width">300dp</dimen>
+    <dimen name="tamanho_large__height">300dp</dimen>
+
+    <dimen name="tamanho_large_width_land">300dp</dimen>
+    <dimen name="tamanho_large__height_land">500dp</dimen>
+
+
+    <dimen name="tamanho_width">300dp</dimen>
+    <dimen name="tamanho__height_land">500dp</dimen>
+
+
 </resources>
