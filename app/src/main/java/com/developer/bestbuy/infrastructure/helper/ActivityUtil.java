@@ -3,18 +3,27 @@ package com.developer.bestbuy.infrastructure.helper;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 
 import com.developer.bestbuy.R;
+import com.developer.bestbuy.application.service.dao.DaoModelPresenter;
+import com.developer.bestbuy.application.ui.activities.ViewCesta;
+import com.developer.bestbuy.application.ui.activities.ViewLogin;
 import com.developer.bestbuy.domain.model.Carro;
-import com.google.gson.JsonObject;
+import com.developer.bestbuy.domain.model.ItensPedido;
+import com.developer.bestbuy.domain.model.Pedido;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -328,4 +337,202 @@ public class ActivityUtil {
         return result;
     }
 
+    public List<Carro> recuperaListCarrosCarrinho(Context context) throws Exception {
+        Carro carro;
+        ItensPedido itensPedido;
+        Integer  idCarro;
+        List<Carro> result = new ArrayList<>();
+
+        DaoModelPresenter daoModelPresenter;
+        SQLiteDatabase db = null;
+        try {
+            daoModelPresenter = new DaoModelPresenter(context);
+            db = daoModelPresenter.getExternalDB();
+            Cursor cursor;
+            if(db!= null){
+                String[] argsCARRO;
+                String[] args = {String.valueOf(ViewLogin.idPedidoSimulado)};//SIMULAÇÃO
+                cursor = db.query(this.context.getString(R.string.tblNameItensPedido), null, "idPedido=?", args, null,null,null);
+                int qtde = cursor.getCount();
+                if(cursor.getCount()>0){
+                    cursor.moveToFirst();
+                    argsCARRO = new String[qtde];
+                    for(int x=0;x<cursor.getCount();x++){
+                        itensPedido = new ItensPedido();
+                        Integer idPedido = cursor.getInt(cursor.getColumnIndex(context.getString(R.string.idPedidoItemPedido)));
+                        idCarro = cursor.getInt(cursor.getColumnIndex(context.getString(R.string.idCarroItemPedido)));
+                        Float   precoUnitario = cursor.getFloat(cursor.getColumnIndex(context.getString(R.string.precoUnitarioItemPedido)));
+                        Integer  quantidade = cursor.getInt(cursor.getColumnIndex(context.getString(R.string.quantidadeItemPedido)));
+                        Float    precoTotal = cursor.getFloat(cursor.getColumnIndex(context.getString(R.string.precoTotalItemPedido)));
+
+                        itensPedido.setIdPedido(idPedido);
+                        itensPedido.setIdCarro(idCarro);
+                        itensPedido.setPrecoUnitario(precoUnitario);
+                        itensPedido.setQuantidade(quantidade);
+                        itensPedido.setPrecoTotal(precoTotal);
+
+                        argsCARRO [x]= String.valueOf(idCarro);
+                        cursor.moveToNext();
+                    }
+
+                    if(argsCARRO != null && argsCARRO.length>0){
+                        for(int y=0;y<argsCARRO.length;y++){
+                            String[] argsExtras = {argsCARRO[y]};
+                            cursor = db.query(this.context.getString(R.string.tblNameCarro), null, "id=?", argsExtras, null,null,null);
+
+                            int qtdeCARRO = cursor.getCount();
+                            if(cursor.getCount()>0) {
+                                cursor.moveToFirst();
+                                do {
+                                    carro = new Carro();
+
+                                    Integer id = cursor.getInt(cursor.getColumnIndex(context.getString(R.string.idCarro)));
+                                    String nome  = cursor.getString(cursor.getColumnIndex(context.getString(R.string.nomeCarro)));
+                                    String descricao  = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsCarro)));
+                                    String marca  = cursor.getString(cursor.getColumnIndex(context.getString(R.string.marcaCarro)));
+                                    Integer quantidade = cursor.getInt(cursor.getColumnIndex(context.getString(R.string.quantidadeCarro)));
+                                    Float preco = cursor.getFloat(cursor.getColumnIndex(context.getString(R.string.precoCarro)));
+                                    String imagem = cursor.getString(cursor.getColumnIndex(context.getString(R.string.imagemCarro)));
+
+
+                                    carro.setId(id);
+                                    carro.setNome(nome);
+                                    carro.setDescricao(descricao);
+                                    carro.setMarca(marca);
+                                    carro.setQuantidade(quantidade);
+                                    carro.setPreco(preco);
+                                    carro.setImagem(imagem);
+
+                                    result.add(carro);
+                                } while (cursor.moveToNext());
+                            }
+                        }
+                    }
+                }
+            }
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+
+        return result;
+    }
+
+
+
+    public boolean addItem(Context context, String str){
+        Cursor cursor;
+        boolean result;
+        ItensPedido itensPedido;
+        try{
+            Gson gson = new GsonBuilder().create();
+            Carro  c = gson.fromJson(str, Carro.class);
+            ContentValues valuesItenPedido;
+            DaoModelPresenter daoModelPresenter;
+            SQLiteDatabase db = null;
+            try {
+                daoModelPresenter = new DaoModelPresenter(context);
+                db = daoModelPresenter.getExternalDB();
+                if (db != null) {
+
+                    String[] args = {String.valueOf(ViewLogin.idPedidoSimulado)};//SIMULAÇÃO
+                    cursor = db.query(this.context.getString(R.string.tblNameItensPedido), null, "idPedido=?", args, null,null,null);
+                    if(cursor.getCount()>0) {
+                        cursor.moveToFirst();
+                        itensPedido = new ItensPedido();
+                        Integer idPedido = cursor.getInt(cursor.getColumnIndex(context.getString(R.string.idPedidoItemPedido)));
+                        Float   precoUnitario = cursor.getFloat(cursor.getColumnIndex(context.getString(R.string.precoUnitarioItemPedido)));
+                        Integer  quantidade = cursor.getInt(cursor.getColumnIndex(context.getString(R.string.quantidadeItemPedido)));
+                        Float    precoTotal = cursor.getFloat(cursor.getColumnIndex(context.getString(R.string.precoTotalItemPedido)));
+
+                        itensPedido.setIdPedido(idPedido);
+                        itensPedido.setIdCarro(c.getId());
+                        itensPedido.setPrecoUnitario(precoUnitario);
+                        itensPedido.setQuantidade(quantidade);
+                        itensPedido.setPrecoTotal(precoTotal);
+
+                        db = daoModelPresenter.getExternalDB();
+                        if (db != null) {
+                            valuesItenPedido = new ContentValues();
+                            valuesItenPedido.put(context.getString(R.string.idPedidoItemPedido), ViewLogin.idPedidoSimulado);
+                            valuesItenPedido.put(context.getString(R.string.idCarroItemPedido), c.getId());
+                            valuesItenPedido.put(context.getString(R.string.precoUnitarioItemPedido), itensPedido.getPrecoUnitario());
+                            valuesItenPedido.put(context.getString(R.string.quantidadeItemPedido), c.getQuantidade());
+                            valuesItenPedido.put(context.getString(R.string.precoTotalItemPedido),itensPedido.getPrecoTotal());
+
+                            db.insert(this.context.getString(R.string.tblNameItensPedido), "", valuesItenPedido);
+                        }
+                    }
+                }
+            }catch (Exception e){
+                e.getMessage().toString();
+            }
+
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return false;
+    }
+
+    public boolean removeItem(Context context, String str){
+        Cursor cursor;
+        boolean result;
+        try{
+            Gson gson = new GsonBuilder().create();
+            Carro  c = gson.fromJson(str, Carro.class);
+
+            DaoModelPresenter daoModelPresenter;
+            SQLiteDatabase db = null;
+            try {
+                daoModelPresenter = new DaoModelPresenter(context);
+                db = daoModelPresenter.getExternalDB();
+                if (db != null) {
+                    result = db.delete(this.context.getString(R.string.tblNameItensPedido), "idPedido" + "=" + ViewLogin.idPedidoSimulado, null) > 0;
+                }
+            }catch (Exception e){
+                e.getMessage().toString();
+            }
+
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return false;
+    }
+
+    public String getInfCesta(Context context){
+        String result = "SEM PRODUTOS NA SACOLA";
+        Cursor cursor;
+        ItensPedido itensPedido;
+        try{
+            DaoModelPresenter daoModelPresenter;
+            SQLiteDatabase db = null;
+            try {
+                daoModelPresenter = new DaoModelPresenter(context);
+                db = daoModelPresenter.getExternalDB();
+                if (db != null) {
+                    String[] args = {String.valueOf(ViewLogin.idPedidoSimulado)};//SIMULAÇÃO
+                    cursor = db.query(this.context.getString(R.string.tblNameItensPedido), null, "idPedido=?", args, null,null,null);
+                    if(cursor.getCount()>0) {
+                        if(cursor.getCount()>0) {
+                            cursor.moveToFirst();
+                            itensPedido = new ItensPedido();
+                            Integer idPedido = cursor.getInt(cursor.getColumnIndex(context.getString(R.string.idPedidoItemPedido)));
+                            Float precoUnitario = cursor.getFloat(cursor.getColumnIndex(context.getString(R.string.precoUnitarioItemPedido)));
+                            Integer quantidade = cursor.getInt(cursor.getColumnIndex(context.getString(R.string.quantidadeItemPedido)));
+                            Float precoTotal = cursor.getFloat(cursor.getColumnIndex(context.getString(R.string.precoTotalItemPedido)));
+
+                            itensPedido.setPrecoUnitario(precoUnitario);
+                            itensPedido.setQuantidade(quantidade);
+                            itensPedido.setPrecoTotal(precoTotal);
+                            result =  "Total: " + String.valueOf((precoUnitario * quantidade));
+                        }
+                    }
+                }
+            }catch (Exception e){
+                e.getMessage().toString();
+            }
+        }catch (Exception e) {
+            e.getMessage().toString();
+        }
+        return result;
+    }
 }
