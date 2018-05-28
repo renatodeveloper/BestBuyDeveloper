@@ -5,14 +5,23 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 
 import com.developer.bestbuy.R;
+import com.developer.bestbuy.domain.model.Carro;
+import com.google.gson.JsonObject;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ActivityUtil {
     Context context;
@@ -146,4 +155,177 @@ public class ActivityUtil {
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
+
+    //********************************************** start shared endPoint getAllCars
+    public static  void definePrefJSON_CAR(Context context, JSONArray array){
+        try{
+            SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.filePrefJsonCar), Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = mPrefs.edit();
+            editor.putString(context.getString(R.string.valuePrefJsonCar), array.toString());
+            editor.commit();
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+    }
+
+    public String recuperaPrefJSON_CAR(Context context){
+        String result = new String();
+        try{
+            SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.filePrefJsonCar), Context.MODE_PRIVATE);
+            result = mPrefs.getString(context.getString(R.string.valuePrefJsonCar), "");
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return result;
+    }
+
+    public static  void limpaPrefJSON_CAR(Context context){
+        try{
+            SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.filePrefJsonCar), context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = mPrefs.edit();
+            editor.clear();
+
+            editor.commit();
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+    }
+    //********************************************** Flag existe TBL Carro
+    public void definePref_if_Carro(Context context) {
+        try{
+            SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.filePrefJsonCar), Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = mPrefs.edit();
+            editor.putBoolean(context.getString(R.string.flagPrefCarro), true);
+            editor.commit();
+        }catch (Exception e) {
+            e.getMessage().toString();
+        }
+    }
+    public boolean recuperaPref_if_Carro(Context context){
+        JSONObject result = new JSONObject();
+        try{
+            SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.filePrefJsonCar), Context.MODE_PRIVATE);
+            if(mPrefs.getBoolean(context.getString(R.string.flagPrefCarro), false)){
+                return true;
+            }
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return false;
+    }
+    public void limpaPref_if_Carro(Context context) {
+        try{
+            SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.filePrefJsonCar), context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = mPrefs.edit();
+            editor.clear();
+
+            editor.commit();
+
+        }catch (Exception e) {
+            e.getMessage().toString();
+        }
+    }
+
+    //********************************************** Flag existe TBL Usuáio
+    public void definePref_if_Usuario(Context context) {
+        try{
+            SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.filePrefJsonUser), Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = mPrefs.edit();
+            editor.putBoolean(context.getString(R.string.flagPrefUsuario), true);
+            editor.commit();
+        }catch (Exception e) {
+            e.getMessage().toString();
+        }
+    }
+    public boolean recuperaPref_if_Usuario(Context context){
+        JSONObject result = new JSONObject();
+        try{
+            SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.filePrefJsonUser), Context.MODE_PRIVATE);
+            if(mPrefs.getBoolean(context.getString(R.string.flagPrefUsuario), false)){
+                return true;
+            }
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return false;
+    }
+    public void limpaPref_if_Usuario(Context context) {
+        try{
+            SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.filePrefJsonUser), context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = mPrefs.edit();
+            editor.clear();
+
+            editor.commit();
+
+        }catch (Exception e) {
+            e.getMessage().toString();
+        }
+    }
+
+    //********************************************** Flag existe TBL Pedido, essa tem que limpar após logout
+    public void definePref_if_Pedido(Context context) {
+        try{
+            SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.filePrefJsonPed), Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = mPrefs.edit();
+            editor.putBoolean(context.getString(R.string.flagPrefPedido), true);
+            editor.commit();
+        }catch (Exception e) {
+            e.getMessage().toString();
+        }
+    }
+    public boolean recuperaPref_if_Pedido(Context context){
+        JSONObject result = new JSONObject();
+        try{
+            SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.filePrefJsonPed), Context.MODE_PRIVATE);
+            if(mPrefs.getBoolean(context.getString(R.string.flagPrefPedido), false)){
+                return true;
+            }
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return false;
+    }
+    public void limpaPref_if_Pedido(Context context) {
+        try{
+            SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.filePrefJsonPed), context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = mPrefs.edit();
+            editor.clear();
+
+            editor.commit();
+
+        }catch (Exception e) {
+            e.getMessage().toString();
+        }
+    }
+
+    public List<Carro> recuperaListCarros(Context context) throws Exception {
+        List<Carro> result = new ArrayList<>();
+        JSONObject object;
+        Carro carro;
+        ActivityUtil util = new ActivityUtil();
+        try{
+            String response = util.recuperaPrefJSON_CAR(context);
+            JSONArray jArray = new JSONArray(response);
+            for(int i=0; i<jArray.length();i++){
+                object = new JSONObject(jArray.get(i).toString());
+                carro = new Carro();
+                if(object != null){
+                    carro.setId(Integer.valueOf(object.getString(context.getString(R.string.idCarro))));
+                    carro.setNome(object.getString(context.getString(R.string.nomeCarro)));
+                    carro.setDescricao(object.getString(context.getString(R.string.dsCarro)));
+                    carro.setMarca(object.getString(context.getString(R.string.marcaCarro)));
+                    carro.setQuantidade(Integer.valueOf(object.getString(context.getString(R.string.quantidadeCarro))));
+                    carro.setPreco(Float.valueOf(object.getString(context.getString(R.string.precoCarro))));
+                    carro.setImagem(object.getString(context.getString(R.string.imagemCarro)));
+
+                    result.add(carro);
+                }
+            }
+
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return result;
+    }
+
 }
