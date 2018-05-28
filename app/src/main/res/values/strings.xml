@@ -171,4 +171,10 @@
     <string name="filePrefJsonPed">filePrefJsonPed</string>
     <string name="flagPrefPedido">flagPrefPedido</string>
 
+
+
+    <string name="alertTitulo">Atenção!</string>
+    <string name="alertMsg">Deseja finalizar?</string>
+    <string name="alertPositivo">SIM</string>
+    <string name="alertNegativo">NÃO</string>
 </resources>
