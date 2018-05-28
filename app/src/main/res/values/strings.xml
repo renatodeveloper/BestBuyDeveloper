@@ -70,7 +70,7 @@
     </string>
 
     <string name="sqlCreateTableItemPedido">
-        CREATE TABLE ItemPedido (idPedido INTEGER, idCarro INTEGER, precoUnitario DOUBLE, quantidade INTEGER, precoTotal DOUBLE, PRIMARY KEY (idPedido, idCarro));
+        CREATE TABLE ItemPedido (idPedido INTEGER, idCarro INTEGER, precoUnitario DOUBLE, quantidade INTEGER, precoTotal DOUBLE, dsPojoToGson TEXT, PRIMARY KEY (idPedido, idCarro));
     </string>
 
 
@@ -112,5 +112,59 @@
     <string name="preco">PREÇO</string>
     <string name="qtde">QTDE</string>
 
+    <string name="itemPedidoGetPrecoUnitarioError">Error na recuperação do preço unitário.</string>
+    <string name="itemPedidoGetPrecoTotalError">Error na recuperação do preço total.</string>
+    <string name="itemPedidoGetQtdeError">Error na recuperação da quantidade.</string>
+    <string name="itemPedidoGetDataHoraError">Error na recuperação da Data Hora.</string>
+    <string name="itemPedidoGetDsDataHoraError">Error na recuperação da Ds Data Hora.</string>
+    <string name="itemPedidoGetIdUsuarioError">Error na recuperação do id do Usuário.</string>
+    <string name="itemPedidoGetIdPedidoError">Error na recuperação do id do Pedido.</string>
+    <string name="itemPedidoGetCarroError">Error na recuperação do Objeto new Carro()</string>
+    <string name="showErrorItemPedido">Ocoreu um error ao tentar salvar o dado!</string>
+    <string name="itemGetPojoToGsonError">Error no processamento Pojo to GSON.</string>
+
+    <string name="keyPrecoUnitarioCarro">keyPrecoUnitarioCarro</string>
+    <string name="keyQtdeCarro">keyQtdeCarro</string>
+    <string name="keyDataHoraCarro">keyDataHoraCarro</string>
+    <string name="keyDsDataHoraCarro">keyDsDataHoraCarro</string>
+    <string name="keyIdUsuario">keyIdUsuario</string>
+    <string name="keyGsonCarro">keyGsonCarro</string>
+
+    <!-- tabela ItemPedido-->
+    <string name="idPedidoItemPedido">idPedido</string>
+    <string name="idCarroItemPedido">idCarro</string>
+    <string name="precoUnitarioItemPedido">precoUnitario</string>
+    <string name="quantidadeItemPedido">quantidade</string>
+    <string name="precoTotalItemPedido">precoTotal</string>
+    <string name="dsPojoToGson">dsPojoToGson</string>
+
+    <!-- tabela Pedido-->
+    <string name="idPedidoPedido">idPedido</string>
+    <string name="dataHoraPedido">dataHora</string>
+    <string name="dsDataHoraPedido">dsDataHora</string>
+    <string name="totalPedido">total</string>
+    <string name="idUsuarioPedido">idUsuario</string>
+
+    <!-- tabela Carro-->
+    <string name="idCarro">id</string>
+    <string name="nomeCarro">nome</string>
+    <string name="dsCarro">descricao</string>
+    <string name="marcaCarro">marca</string>
+    <string name="quantidadeCarro">quantidade</string>
+    <string name="precoCarro">preco</string>
+    <string name="imagemCarro">imagem</string>
+
+    <!--Preferences Carro -->
+    <string name="filePrefJsonCar">filePrefJsonCar</string>
+    <string name="valuePrefJsonCar">valuePrefJsonCar</string>
+    <string name="flagPrefCarro">flagPrefCarro</string>
+
+    <!--Preferences Usuário -->
+    <string name="filePrefJsonUser">filePrefJsonUser</string>
+    <string name="flagPrefUsuario">flagPrefUsuario</string>
+
+    <!--Preferences Pedido -->
+    <string name="filePrefJsonPed">filePrefJsonPed</string>
+    <string name="flagPrefPedido">flagPrefPedido</string>
 
 </resources>
