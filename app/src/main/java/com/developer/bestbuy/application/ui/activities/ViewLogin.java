@@ -19,6 +19,8 @@ import com.developer.bestbuy.application.service.login.LoginPresenter;
 import com.developer.bestbuy.infrastructure.helper.ActivityUtil;
 import com.developer.bestbuy.infrastructure.helper.DialogHelper;
 
+import java.util.Random;
+
 import butterknife.BindColor;
 import butterknife.BindDimen;
 import butterknife.BindString;
@@ -42,6 +44,9 @@ public class ViewLogin extends Activity implements ILoginView {
     @BindColor(R.color.color_red) int red;
     //@BindString(R.string.title) String title;
     //@BindDimen(R.dimen.spacer) Float spacer;
+
+    public static  int idUsuarioSimulado;
+    public static  int idPedidoSimulado;
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -68,7 +73,9 @@ public class ViewLogin extends Activity implements ILoginView {
         try{
             util = new ActivityUtil(ViewLogin.this);
             helper = new DialogHelper(ViewLogin.this);
-
+            //util.limpaPref_if_Carro(getApplicationContext());
+            //util.limpaPref_if_Pedido(getApplicationContext());
+            //util.limpaPref_if_Usuario(getApplicationContext());
 
             PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
             dsVersao.setText(pInfo.versionName + pInfo.versionCode);
@@ -122,7 +129,18 @@ public class ViewLogin extends Activity implements ILoginView {
 
     @Override
     public void startMainActivity() {
-        startActivity(new Intent(this, Home.class));
+        try{
+            //DADO DE SIMULAÇÃO...
+            Random ranUser = new Random();
+            idUsuarioSimulado = ranUser.nextInt(100);
+
+            Random ranPed = new Random();
+            idPedidoSimulado = ranPed.nextInt(100);
+
+            startActivity(new Intent(this, Home.class));
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
     }
 
     @Override
