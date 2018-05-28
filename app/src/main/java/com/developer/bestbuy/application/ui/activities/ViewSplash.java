@@ -23,6 +23,10 @@ public class ViewSplash extends Activity implements IDaoModel {
         super.onCreate(savedInstanceState);
         try{
             activityUtil = new ActivityUtil();
+            activityUtil.limpaPrefJSON_CAR(getApplicationContext());
+            activityUtil.limpaPref_if_Pedido(getApplicationContext());
+            activityUtil.limpaPref_if_Usuario(getApplicationContext());
+
             if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1){
                 daoModelPresenter = new DaoModelPresenter(this, this);
                 daoModelPresenter.createdbInterno();
