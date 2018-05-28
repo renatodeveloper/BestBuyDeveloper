@@ -27,16 +27,23 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.developer.bestbuy.application.service.IResearchView;
+import com.developer.bestbuy.application.service.carrinho.PedidoController;
 import com.developer.bestbuy.application.service.research.ResearchPresenter;
 import com.developer.bestbuy.application.ui.adapter.AlbumsAdapter;
 import com.developer.bestbuy.R;
 import com.developer.bestbuy.application.ui.adapter.CarroAdapter;
+import com.developer.bestbuy.domain.dao.CarroDao;
 import com.developer.bestbuy.domain.model.Carro;
+import com.developer.bestbuy.domain.model.ItensPedido;
+import com.developer.bestbuy.domain.model.Pedido;
 import com.developer.bestbuy.infrastructure.helper.ActivityUtil;
 import com.developer.bestbuy.infrastructure.helper.DialogHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, IResearchView {
@@ -44,11 +51,40 @@ public class Home extends AppCompatActivity
     private RecyclerView recyclerView;
     private CarroAdapter adapter;
     private List<Carro> albumList;
-
     private ActivityUtil util;
     private DialogHelper helper;
 
     private ResearchPresenter presenter;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        util.limpaPrefJSON_CAR(getApplicationContext());
+        util.limpaPref_if_Pedido(getApplicationContext());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        util = new ActivityUtil(getApplication());
+        if(!util.recuperaPref_if_Carro(getApplicationContext())){
+            if(!util.isOnline()){
+                helper.noConection(Home.this);
+            }else{
+                presenter = new ResearchPresenter(this, this);
+                presenter.buscar();
+
+            }
+        }else {
+            try {
+                List<Carro> value = util.recuperaListCarros(getApplicationContext());
+                adapter = new CarroAdapter(this, value);
+                recyclerView.setAdapter(adapter);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,14 +142,6 @@ public class Home extends AppCompatActivity
             Glide.with(this).load(R.drawable.car_home).into((ImageView) findViewById(R.id.backdrop));
         } catch (Exception e) {
             e.printStackTrace();
-        }
-
-        if(!util.isOnline()){
-            helper.noConection(Home.this);
-        }else{
-            presenter = new ResearchPresenter(this, this);
-            presenter.buscar();
-
         }
     }
 
@@ -328,7 +356,17 @@ public class Home extends AppCompatActivity
     }
 
     @Override
+    public void showResult(Carro value) {
+
+    }
+
+    @Override
     public void error(int resId) {
         Toast.makeText(this, getString(resId), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public Integer getIdCarro() {
+        return null;
     }
 }
