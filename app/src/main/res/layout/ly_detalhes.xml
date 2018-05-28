@@ -116,7 +116,7 @@
                 android:paddingEnd="8dp"
                 android:paddingStart="8dp"
                 android:text="@string/action_add"
-                android:src="@drawable/ic_menu_send"
+                android:src="@drawable/buy_icon"
                 android:textColor="@color/colorPrimaryTextDefaultMaterialLight"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
