@@ -14,6 +14,8 @@ public interface DAO<E> {
 
     boolean save(ContentValues values) throws Exception;
 
+    boolean save(ContentValues values1, ContentValues values2, ContentValues value3) throws Exception;
+
     boolean remove() throws Exception;
 
     boolean check(JSONObject object) throws Exception;
