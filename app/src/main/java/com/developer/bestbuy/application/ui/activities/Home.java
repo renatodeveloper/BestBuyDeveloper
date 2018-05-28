@@ -58,8 +58,9 @@ public class Home extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        util.limpaPrefJSON_CAR(getApplicationContext());
-        util.limpaPref_if_Pedido(getApplicationContext());
+        //util.limpaPrefJSON_CAR(getApplicationContext());
+        //util.limpaPref_if_Pedido(getApplicationContext());
+        //util.limpaPref_if_Usuario(getApplicationContext());
     }
 
     @Override
