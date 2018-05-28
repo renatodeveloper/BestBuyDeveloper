@@ -102,7 +102,7 @@ public class CestaAdapter extends RecyclerView.Adapter<CestaAdapter.MyViewHolder
         // inflate menu
         PopupMenu popup = new PopupMenu(mContext, view);
         MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.menu_car, popup.getMenu());
+        inflater.inflate(R.menu.menu_cesta, popup.getMenu());
         popup.setOnMenuItemClickListener(new MyMenuItemClickListener());
         popup.show();
     }
@@ -125,9 +125,7 @@ public class CestaAdapter extends RecyclerView.Adapter<CestaAdapter.MyViewHolder
                     mContext.startActivity(new Intent(mContext, ViewDetalhes.class).putExtras(b));
                     return true;
                 case R.id.action_add_remover:
-                    if(util.removeItem(mContext, str)){
-                        mContext.startActivity(new Intent(mContext, ViewCesta.class));
-                    }
+                    util.removeItem(mContext, str);
                     return true;
                 default:
             }
