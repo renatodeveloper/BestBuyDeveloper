@@ -67,6 +67,14 @@ public class ViewCesta extends AppCompatActivity implements IResearchView {
         util = new ActivityUtil(getApplication());
         String dsTitle = util.getInfCesta(getApplicationContext());
         setTitle(dsTitle);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
+        albumList = new ArrayList<>();
+        adapter = new CestaAdapter(this, albumList);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -78,14 +86,6 @@ public class ViewCesta extends AppCompatActivity implements IResearchView {
                     e.getMessage().toString();
                 }
             }
-
-            recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-
-            albumList = new ArrayList<>();
-            adapter = new CestaAdapter(this, albumList);
-
-            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-            recyclerView.setLayoutManager(layoutManager);
 
             try {
                 List<Carro> value = util.recuperaListCarrosCarrinho(getApplicationContext());
@@ -108,6 +108,16 @@ public class ViewCesta extends AppCompatActivity implements IResearchView {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }else{
+            try {
+
+                List<Carro> value = util.recuperaListCarrosCarrinho(getApplicationContext());
+                adapter = new CestaAdapter(this, value);
+                recyclerView.setAdapter(adapter);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
     }
     /**
@@ -235,7 +245,7 @@ public class ViewCesta extends AppCompatActivity implements IResearchView {
         if (id == R.id.action_add_finalizar) {
                 util.limpaPrefJSON_CAR(getApplicationContext());
                 util.limpaPref_if_Pedido(getApplicationContext());
-                util.limpaPref_if_Usuario(getApplicationContext());
+                //util.limpaPref_if_Usuario(getApplicationContext());
             startActivity(new Intent(this, ViewLogin.class));
             return true;
         }
