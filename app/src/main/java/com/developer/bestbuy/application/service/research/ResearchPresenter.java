@@ -7,6 +7,10 @@ import android.os.Message;
 import com.developer.bestbuy.R;
 import com.developer.bestbuy.application.service.IResearchView;
 import com.developer.bestbuy.domain.model.Carro;
+import com.developer.bestbuy.infrastructure.helper.ActivityUtil;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
 
 import java.util.List;
 
@@ -49,7 +53,7 @@ public class ResearchPresenter {
                             view.error(R.string.research_error_busca);
                         }else{
                             List<Carro> result = (List<Carro>) msg.obj;
-
+                            shared(result);
                             if(result != null && result.size()>0){
                                 view.showResult(result);
                             }
@@ -107,5 +111,19 @@ public class ResearchPresenter {
         }catch (Exception e){
             e.getMessage().toString();
         }
+    }
+
+    public void shared(List<Carro> result ){
+        JSONArray array = new JSONArray();
+        Gson gson;
+        try{
+            for(int x=0;x<result.size();x++){
+                gson = new Gson();
+                array.put(x, gson.toJson(result.get(x)));
+            }
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        ActivityUtil.definePrefJSON_CAR(context, array);
     }
 }
