@@ -1,5 +1,9 @@
 package com.developer.bestbuy.application.ui.activities;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -13,6 +17,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -38,6 +43,7 @@ import com.developer.bestbuy.domain.model.Pedido;
 import com.developer.bestbuy.infrastructure.helper.ActivityUtil;
 import com.developer.bestbuy.infrastructure.helper.DialogHelper;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -97,8 +103,7 @@ public class Home extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent(getApplicationContext(), ViewCesta.class));
             }
         });
 
@@ -143,6 +148,7 @@ public class Home extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     //inicio
@@ -301,7 +307,8 @@ public class Home extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_add_finalizar) {
+            dialigFinalizar(getApplicationContext());
             return true;
         }
 
@@ -369,4 +376,27 @@ public class Home extends AppCompatActivity
     public Integer getIdCarro() {
         return null;
     }
+
+
+    private AlertDialog alerta;
+
+    private void dialigFinalizar(Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getApplicationContext().getResources().getString(R.string.alertTitulo));
+        builder.setMessage(getApplicationContext().getResources().getString(R.string.alertMsg));
+        builder.setPositiveButton(getApplicationContext().getResources().getString(R.string.alertPositivo), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+                startActivity(new Intent(getApplicationContext(), ViewSplash.class));
+            }
+        });
+        builder.setNegativeButton(getApplicationContext().getResources().getString(R.string.alertNegativo), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+
+            }
+        });
+        alerta = builder.create();
+        alerta.show();
+    }
+
+
 }
