@@ -27,7 +27,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.developer.bestbuy.application.service.IResearchView;
-import com.developer.bestbuy.application.service.carrinho.PedidoController;
 import com.developer.bestbuy.application.service.research.ResearchPresenter;
 import com.developer.bestbuy.application.ui.adapter.AlbumsAdapter;
 import com.developer.bestbuy.R;
