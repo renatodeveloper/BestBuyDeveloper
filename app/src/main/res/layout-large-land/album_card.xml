@@ -18,8 +18,8 @@
 
             <ImageView
                 android:id="@+id/car_photo"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/tamanho_large__height_land"
+                android:layout_width="500dp"
+                android:layout_height="300dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:scaleType="fitXY" />
@@ -33,7 +33,7 @@
                 android:paddingRight="@dimen/album_title_padding"
                 android:paddingTop="@dimen/album_title_padding"
                 android:textColor="@color/album_title"
-                android:textSize="@dimen/album_title" />
+                android:textSize="30dp" />
 
             <TextView
                 android:id="@+id/modelo"
@@ -43,7 +43,7 @@
                 android:paddingBottom="@dimen/songs_count_padding_bottom"
                 android:paddingLeft="@dimen/album_title_padding"
                 android:paddingRight="@dimen/album_title_padding"
-                android:textSize="@dimen/songs_count" />
+                android:textSize="30dp" />
 
             <TextView
                 android:id="@+id/preco"
@@ -53,15 +53,15 @@
                 android:paddingBottom="@dimen/songs_count_padding_bottom"
                 android:paddingLeft="@dimen/album_title_padding"
                 android:paddingRight="@dimen/album_title_padding"
-                android:textSize="@dimen/songs_count" />
+                android:textSize="30dp" />
 
             <ImageView
                 android:id="@+id/overflow"
-                android:layout_width="wrap_content"
-                android:layout_height="42dp"
+                android:layout_width="44dp"
+                android:layout_height="96dp"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/car_photo"
-                android:layout_marginTop="-2dp"
+                android:layout_marginTop="-55dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_dots" />
 
