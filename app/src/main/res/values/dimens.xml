@@ -38,7 +38,7 @@
     <dimen name="tamanho_large_width">300dp</dimen>
     <dimen name="tamanho_large__height">300dp</dimen>
 
-    <dimen name="tamanho_large_width_land">300dp</dimen>
+    <dimen name="tamanho_large_width_land">400dp</dimen>
     <dimen name="tamanho_large__height_land">500dp</dimen>
 
 
