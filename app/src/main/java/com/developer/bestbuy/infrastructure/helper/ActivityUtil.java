@@ -21,7 +21,6 @@ import com.developer.bestbuy.application.ui.activities.ViewCesta;
 import com.developer.bestbuy.application.ui.activities.ViewLogin;
 import com.developer.bestbuy.domain.model.Carro;
 import com.developer.bestbuy.domain.model.ItensPedido;
-import com.developer.bestbuy.domain.model.Pedido;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -539,5 +538,17 @@ public class ActivityUtil {
             e.getMessage().toString();
         }
         return result;
+    }
+
+    public ArrayList<Carro> listToArryList(List<Carro> list){
+        ArrayList<Carro> retornoList = new ArrayList<>();
+        try{
+            for(Carro c: list){
+                retornoList.add(c);
+            }
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return retornoList;
     }
 }
