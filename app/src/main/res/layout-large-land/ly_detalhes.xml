@@ -109,8 +109,8 @@
             <ImageView
                 android:id="@+id/imageViewAdd"
                 style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="400dp"
+                android:layout_height="100dp"
                 android:layout_marginStart="288dp"
                 android:minWidth="0dp"
                 android:paddingEnd="8dp"
