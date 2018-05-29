@@ -61,6 +61,21 @@ public class Home extends AppCompatActivity
 
     private ResearchPresenter presenter;
 
+    public static List<Carro> valueList;
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if(valueList != null && valueList.size()>0){
+            adapter = new CarroAdapter(this, valueList);
+            recyclerView.setAdapter(adapter);
+        }
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -83,8 +98,8 @@ public class Home extends AppCompatActivity
             }
         }else {
             try {
-                List<Carro> value = util.recuperaListCarros(getApplicationContext());
-                adapter = new CarroAdapter(this, value);
+                valueList = util.recuperaListCarros(getApplicationContext());
+                adapter = new CarroAdapter(this, valueList);
                 recyclerView.setAdapter(adapter);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -351,7 +366,8 @@ public class Home extends AppCompatActivity
     @Override
     public void showResult(List<Carro> value) {
         try{
-            adapter = new CarroAdapter(this, value);
+            valueList = value;
+            adapter = new CarroAdapter(this, valueList);
             recyclerView.setAdapter(adapter);
             for(Carro c : value){
                 if(c!=null){
