@@ -70,6 +70,15 @@ public class ItensPedidoPresenter {
                 viewPedido.showErrorPedido(R.string.itemPedidoGetIdPedidoError);
                 return;
             }
+            if((viewItens.getPrecoUnitario() * viewItens.getQtde())> 100000){
+                viewPedido.showErrorPedido(R.string.dsCompraSuperior);
+                return;
+            }
+
+            if(service.checkLimite()){
+                viewPedido.showErrorPedido(R.string.dsCompraSuperior);
+                return;
+            }
 
             boolean registerSucceeded = service.addItem();
             if(registerSucceeded){
