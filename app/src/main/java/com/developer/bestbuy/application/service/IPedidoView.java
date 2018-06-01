@@ -7,7 +7,7 @@ public interface IPedidoView {
     Double getTotal();
     int getIdUsuario();
 
-
+    void showLimitePedido(int resId);
     void showErrorPedido(int resId);
     void resultOkPedido();
 }
