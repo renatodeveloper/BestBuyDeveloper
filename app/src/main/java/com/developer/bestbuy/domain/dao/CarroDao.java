@@ -2,6 +2,7 @@ package com.developer.bestbuy.domain.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
@@ -89,15 +90,18 @@ public class CarroDao extends Carro implements DAO<Carro> {
                 db = this.daoModelPresenter.getExternalDB();
 
                 //*** CARRO: Caso não exista a tabela Carro a mesma é populada um unica vez
-                if(!util.recuperaPref_if_Carro(context)){
+                if (checkLimiteCompra(valuesPedido, valuesItem)) {
+                    return false;
+                } else {
+                if (!util.recuperaPref_if_Carro(context)) {
                     JSONObject object;
                     ContentValues valuesCar;
                     String response = util.recuperaPrefJSON_CAR(context);
                     JSONArray jArray = new JSONArray(response);
-                    for(int i=0; i<jArray.length();i++){
+                    for (int i = 0; i < jArray.length(); i++) {
                         object = new JSONObject(jArray.get(i).toString());
 
-                        if(object != null){
+                        if (object != null) {
                             valuesCar = new ContentValues();
                             valuesCar.put(context.getString(R.string.idCarro), object.getString(context.getString(R.string.idCarro)));
                             valuesCar.put(context.getString(R.string.nomeCarro), object.getString(context.getString(R.string.nomeCarro)));
@@ -113,7 +117,7 @@ public class CarroDao extends Carro implements DAO<Carro> {
                 }
 
                 //*** USUÁRIO: Caso não exista a tabela Usuario o mesmo é incluido um unica vez - fluxo de teste
-                if(!util.recuperaPref_if_Usuario(context)){
+                if (!util.recuperaPref_if_Usuario(context)) {
                     if (_idUser < 1) {
                         _idUser = db.insert(TABLE_NAME_USUARIO, "", valuesUser);
                     } else {
@@ -122,7 +126,7 @@ public class CarroDao extends Carro implements DAO<Carro> {
                     util.definePref_if_Usuario(context);
                 }
                 //*** PEDIDO: Caso não exista a instancia de pedido é adicionado o mesmo, esse preferences necessáriamente é limpado
-                if(!util.recuperaPref_if_Pedido(context)){
+                if (!util.recuperaPref_if_Pedido(context)) {
                     if (_idPedido < 1) {
                         _idPedido = db.insert(TABLE_NAME_PEDIDO, "", valuesPedido);
                     } else {
@@ -137,6 +141,7 @@ public class CarroDao extends Carro implements DAO<Carro> {
                 } else {
                     db.update(TABLE_NAME_ITEMPEDIDO, valuesItem, "idPedido=" + _idItemPedido, null);
                 }
+            }
 
                 result = true;
             } catch (SQLiteException e){
@@ -207,4 +212,38 @@ public class CarroDao extends Carro implements DAO<Carro> {
     public Transacao transmitir() throws Exception {
         return null;
     }
+
+
+        public boolean checkLimiteCompra(ContentValues valuesPedido, ContentValues valuesItem){
+            SQLiteDatabase db = null;
+            Cursor cursor;
+            Double precoTotal = 0.0;
+            double limite = 100000.0;
+        try{
+            db = this.daoModelPresenter.getExternalDB();
+
+            int idPedido = (int) valuesItem.get(context.getString(R.string.idPedidoItemPedido));
+            int valorTotalDesejado = (int) valuesItem.get(context.getString(R.string.precoTotalItemPedido));
+
+            cursor =  db.query(TABLE_NAME_ITEMPEDIDO, null, "idPedido=?", new String[] { String.valueOf(idPedido)},null, null, null);
+
+            if(cursor !=null && cursor.getCount()>0){
+                cursor.moveToFirst();
+
+                do{
+                     int test = cursor.getInt(cursor.getColumnIndex(context.getString(R.string.idCarroItemPedido)));
+                     precoTotal = cursor.getDouble(cursor.getColumnIndex(context.getString(R.string.precoTotalItemPedido)));
+                    //precoTotal = cursor.getDouble(cursor.getColumnIndex(context.getString(R.string.precoTotalItemPedido)));
+                    precoTotal ++;
+                }while (cursor.moveToNext());
+            }
+
+            if(precoTotal + valorTotalDesejado>=limite){
+                return true;
+            }
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return false;
+        }
 }
