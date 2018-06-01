@@ -64,4 +64,28 @@ public class ItensPedidoService {
         return false;
     }
 
+    public boolean checkLimite(){
+        carroDao = new CarroDao(this.context);
+        ContentValues valuesPedido = new ContentValues();
+        valuesPedido.put(context.getString(R.string.idPedidoPedido), viewPedido.getIdPedido());
+        valuesPedido.put(context.getString(R.string.dataHoraPedido), viewPedido.getDataHora());
+        valuesPedido.put(context.getString(R.string.dsDataHoraPedido), viewPedido.getDsDataHora());
+        valuesPedido.put(context.getString(R.string.totalPedido), viewPedido.getTotal());
+        valuesPedido.put(context.getString(R.string.idUsuarioPedido), viewPedido.getIdUsuario());
+
+        ContentValues valuesItemPedido = new ContentValues();
+        valuesItemPedido.put(context.getString(R.string.idPedidoItemPedido), viewPedido.getIdPedido());
+        valuesItemPedido.put(context.getString(R.string.idCarroItemPedido), viewItens.getCarro().getId());
+        valuesItemPedido.put(context.getString(R.string.precoUnitarioItemPedido), viewItens.getPrecoUnitario());
+        valuesItemPedido.put(context.getString(R.string.quantidadeItemPedido), viewItens.getQtde());
+        valuesItemPedido.put(context.getString(R.string.precoTotalItemPedido), viewItens.getTotalItemPedido());
+        valuesItemPedido.put(context.getString(R.string.dsPojoToGson), viewItens.getValueJson());
+
+        if(carroDao.checkLimiteCompra(valuesPedido, valuesItemPedido)){
+            return true;
+        }else{
+            return  false;
+        }
+    }
+
 }
