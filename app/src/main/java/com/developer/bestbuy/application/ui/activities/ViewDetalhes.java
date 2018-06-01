@@ -283,6 +283,11 @@ public class ViewDetalhes extends Activity implements IResearchView, IPedidoView
     }
 
     @Override
+    public void showLimitePedido(int resId) {
+        Toast.makeText(this, getString(resId), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
     public void showErrorPedido(int resId) {
         Toast.makeText(this, getString(resId), Toast.LENGTH_LONG).show();
     }
