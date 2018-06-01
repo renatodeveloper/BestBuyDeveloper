@@ -121,6 +121,7 @@
     <string name="itemPedidoGetDsDataHoraError">Error na recuperação da Ds Data Hora.</string>
     <string name="itemPedidoGetIdUsuarioError">Error na recuperação do id do Usuário.</string>
     <string name="itemPedidoGetIdPedidoError">Error na recuperação do id do Pedido.</string>
+    <string name="dsCompraSuperior">A solicitação supera o limite permitido de 100.000,00.</string>
     <string name="itemPedidoGetCarroError">Error na recuperação do Objeto new Carro()</string>
     <string name="showErrorItemPedido">Ocoreu um error ao tentar salvar o dado!</string>
     <string name="itemGetPojoToGsonError">Error no processamento Pojo to GSON.</string>
